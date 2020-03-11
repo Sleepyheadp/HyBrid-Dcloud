@@ -1,0 +1,12 @@
+{
+  "index.html": {
+    "resources": [
+      "pages/home/home.html"
+    ],
+    "refer": [
+      "pages/mine/mine.html",
+      "pages/play/play.html",
+      "pages/home/home.html"
+    ]
+  }
+}
