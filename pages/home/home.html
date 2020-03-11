@@ -107,38 +107,37 @@
 		<!--内容盒子-->
 		<template id="my-sound-box">
 			<div class="my-sound-box">
-				<my-sound></my-sound>
+				<my-sound
+					v-for = "sound in sounds"
+					:key="sound.id"
+					:data="sound"
+				></my-sound>
 			</div>
 		</template>
 		<template id="my-sound">
 			<div class="my-sound">
 				<div class="panel-head">
-					<p class="title">有声漫画</p>
+					<p class="title">{{data.title}}</p>
 					<p class="more">更多</p>
 				</div>
-				<panel-body>
-					<my-sound-item></my-sound-item>
-					<my-sound-item></my-sound-item>
-					<my-sound-item></my-sound-item>
-				</panel-body>
-			</div>
-		</template>
-		<template id="panel-body">
-			<div class="panel-body">
-				<my-sound-item></my-sound-item>
-				<my-sound-item></my-sound-item>
-				<my-sound-item></my-sound-item>
+				<div class="panel-body">
+					<my-sound-item
+						v-for = "item in data.objects_point"
+						:key = "item.id"
+						:data = "item"
+					></my-sound-item>
+				</div>
 			</div>
 		</template>
 		<template id="my-sound-item">
 			<div class="my-sound-item">
 				<div class="img-box">
-					<img src="http://static.missevan.com/coversmini/201612/03/d2f67c47830c92b0912e3d01ef598a77203035.jpg" alt="" />
+					<img :src="getImageUrl" alt="" />
 				</div>
-				<p class="item-title">彼此彼此</p>
+				<p class="item-title">{{data.soundstr}}</p>
 				<p class="item-info">
-					<span class="play">9393</span>
-					<span class="comment">1</span>
+					<span class="play">{{data.view_count | filterData}}</span>
+					<span class="comment">{{data.comment_count | filterData}}</span>
 				</p>
 			</div>
 		</template>
@@ -148,17 +147,46 @@
 	<script src="../../js/swiper.js"></script>
 	<script>
 		Vue.component("my-sound-box",{
-			template:"#my-sound-box"
+			template:"#my-sound-box",
+			data(){
+				return {
+					sounds:[]
+				}
+			},
+			created(){
+				mui.ajax('https://www.missevan.com/sound/newhomepagedata',{
+					dataType:'json',//服务器返回json格式数据           
+					success:(data)=>{
+						this.sounds = data.music
+					}
+				});
+			}
 		})
 		Vue.component("my-sound",{
-			template:"#my-sound"
-		})
-		Vue.component("panel-body",{
-			template:"#panel-body"
+			template:"#my-sound",
+			props:["data"]
 		})
 		Vue.component("my-sound-item",{
-			template:"#my-sound-item"
+			template:"#my-sound-item",
+			props:["data"],
+			computed:{
+				getImageUrl(){
+					let url = "http://static.missevan.com/coversmini/"
+					return url+this.data.cover_image
+				}
+			},
+			filters:{
+				filterData(val){
+					if(val>10000){
+						val = val/10000
+						val = val.toFixed(1)
+						val += 'w'
+					}
+					return val;
+				}
+			}
 		})
+		/*轮播图组件*/
 		Vue.component("home-banner",{
 			template:"#home-banner",
 			data(){//让每个示例都拥有一份被返回对象的独立的拷贝
