@@ -1,22 +1,18 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
 		<meta charset="utf-8">
 		<title>Hello MUI</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
-
 		<link rel="stylesheet" href="./css/mui.min.css">
 		<style>
-			html,
-			body {
+			html,body {
 				background-color: #efeff4;
 			}
 		</style>
 	</head>
-
 	<body>
 		<nav class="mui-bar mui-bar-tab">
 			<a id="defaultTab" class="mui-tab-item mui-active" href="home.html">
@@ -34,7 +30,7 @@
 		</nav>
 		<script src="./js/mui.min.js"></script>
 		<script type="text/javascript" charset="utf-8">
-			 //mui初始化
+			//mui初始化
 			mui.init();
 			var subpages = [
 				{url:"./pages/home/",id:"home.html"},
@@ -42,15 +38,15 @@
 				{url:"./pages/mine/",id:"mine.html"}
 			];
 			var subpage_style = {
-				//...
+				top:'0px',
+				bottom:'51px'
 			};
-			
 			var aniShow = {};
-			
-			 //创建子页面，首个选项卡页面显示，其它均隐藏；
+			//创建子页面，首个选项卡页面显示，其它均隐藏；
+			//注意方法要卸载mui.plusReady函数中才可以
 			mui.plusReady(function() {
 				//设置导航栏的系统样式
-				plus.navigator.setStatusBarStyle("light");
+				plus.navigator.setStatusBarStyle("dark");
 				var self = plus.webview.currentWebview();
 				for (var i = 0; i < 3; i++) {
 					var temp = {};

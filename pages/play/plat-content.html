@@ -1,53 +1,15 @@
 <!doctype html>
 <html>
-
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<script src="../../js/rem.js"></script>
-		<style>
-			.common-header{
-				background-color:#111;
-			}
-			.common-header a,.common-header h1{
-				color:#fff;
-			}
-			/*my-music-box*/
-			.my-music-box{
-				margin:20px;
-				display:flex;
-				justify-content: space-around;
-				flex-wrap: wrap;
-			}
-			.my-music-box .img-box{
-				width:1.6rem;
-				height: 1.6rem;
-			}
-			.my-music-box .img-box img{
-				width: 100%;
-				height: 100%;
-				border-radius:6px;
-			}
-			.my-music-box .music-item .title{
-				margin-top:6px;
-			    width: 1.6rem;
-			    height: 40px;
-			    text-overflow: ellipsis;
-			    overflow: hidden;
-			    line-height: 20px; 
-			    white-space: nowrap;
-			}
-		</style>
+		<link rel="stylesheet" href="index.css" />
 	</head>
-
 	<body>
 		<div id="app">
-			<header class="mui-bar mui-bar-nav common-header">
-			    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			    <h1 class="mui-title">好玩</h1>
-			</header>
 			<!--下拉刷新容器-->
 			<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
 			  <div class="mui-scroll">
@@ -55,10 +17,6 @@
 		      	<my-music-box></my-music-box>
 			  </div>
 			</div>
-			<!--被下拉加载容器所替代-->
-			<!--<div class="mui-content">
-				<my-music-box></my-music-box>
-			</div>-->
 		</div>
 		<!--内部模板-->
 		<template id="my-music-box">
@@ -109,7 +67,6 @@
 				},
 				created(){
 					this.getMusics(),
-					//上拉加载
 					mui.init({
 					  	pullRefresh : {
 					    	container:'#refreshContainer',//待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等

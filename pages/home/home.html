@@ -31,6 +31,20 @@
 				font-size:16px;
 				color:#000;
 			}
+			.my-sound .panel-head .more::after{
+				-webkit-background-size: 262px 234px;
+			    -moz-background-size: 262px 234px;
+			    background-size: 262px 234px;
+			    background-position: -223px -132px;
+			    width: 18px;
+			    height: 18px;
+			    background-image: url(http://static.missevan.com/assets/m/images/build/sprite-icons@2x.bfd3fcc1.png);
+			    content: "";
+			    display: inline-block;
+			    position: relative;
+			    top: 4px;
+			    right: -3px;
+			}
 			/*盒子*/
 			.my-sound-item{
 				width:106px;
@@ -146,6 +160,7 @@
 	<script src="../../js/vue.js"></script>
 	<script src="../../js/swiper.js"></script>
 	<script>
+		var isOk = 0;
 		Vue.component("my-sound-box",{
 			template:"#my-sound-box",
 			data(){
@@ -154,10 +169,21 @@
 				}
 			},
 			created(){
+				//plus上挂载的方法必须放在mui.plusReady中运行
+				mui.plusReady(function() {
+					plus.nativeUI.showWaiting("等待中...");
+				})
 				mui.ajax('https://www.missevan.com/sound/newhomepagedata',{
 					dataType:'json',//服务器返回json格式数据           
 					success:(data)=>{
 						this.sounds = data.music
+						isOk++;
+						if(isOk === 2){
+							//关闭系统等待框
+							mui.plusReady(function(){
+								plus.nativeUI.closeWaiting();
+							})
+						}
 					}
 				});
 			}
@@ -195,12 +221,15 @@
 				}
 			},
 			created(){
-				//https://www.missevan.com/mobileWeb/newHomepage3
+				//plus上挂载的方法必须放在mui.plusReady中运行
+				mui.plusReady(function() {
+					plus.nativeUI.showWaiting("等待中...");
+				})
 				mui.ajax('https://www.missevan.com/mobileWeb/newHomepage3',{
 					dataType:'json',//服务器返回json格式数据
 					type:'get',//HTTP请求类型              
 					success:(data)=>{
-						console.log(data.info.banner)
+						//console.log(data.info.banner)
 						this.banners = data.info.banner  
 						this.$nextTick(()=>{//箭头函数  内部无this指向
 							new Swiper(".home-banner",{
@@ -210,6 +239,13 @@
 								}
 							})
 						})
+						isOk++;
+						if(isOk === 2){
+							//关闭系统等待框
+							mui.plusReady(function(){
+								plus.nativeUI.closeWaiting();
+							})
+						}
 					}
 				});
 			}
